@@ -46,7 +46,7 @@
 
 - name: create upload directory
   file:
-    path: "{{ mat2_web_docroot }}/upload"
+    path: "{{ mat2_web_docroot }}/uploads"
     state: directory
     owner: "{{ mat2_web_user }}"
     group: "{{ mat2_web_group }}"
