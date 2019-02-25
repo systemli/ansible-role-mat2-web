@@ -2,12 +2,11 @@
 
 - name: install mat2
   apt:
-    #name: mat2
-    #default_release: "{{ 'stretch-backports' if ansible_distribution_release == 'stretch' else omit }}"
+    # name: mat2
+    default_release: "{{ 'stretch-backports' if ansible_distribution_release == 'stretch' else omit }}"
     install_recommends: False
     deb: http://ftp.de.debian.org/debian/pool/main/m/mat2/mat2_0.7.0-1_all.deb
     state: present
-
 
 - name: install mat2-web dependencies
   apt:
