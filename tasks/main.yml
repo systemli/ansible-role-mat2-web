@@ -1,0 +1,114 @@
+---
+
+- name: install mat2
+  apt:
+    #name: mat2
+    #default_release: "{{ 'stretch-backports' if ansible_distribution_release == 'stretch' else omit }}"
+    install_recommends: False
+    deb: http://ftp.de.debian.org/debian/pool/main/m/mat2/mat2_0.7.0-1_all.deb
+    state: present
+
+
+- name: install mat2-web dependencies
+  apt:
+    name:
+      - bubblewrap
+      - cryptsetup
+      - git
+      - python3-flask
+      - uwsgi
+      - uwsgi-plugin-python3
+    state: present
+
+- name: create directory /var/www
+  file:
+    path: /var/www
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create mat2-web user
+  user:
+    name: "{{ mat2_web_user }}"
+    home: "{{ mat2_web_home }}"
+    shell: /bin/false
+
+- name: get mat2-web git repository
+  git:
+    repo: https://0xacab.org/jvoisin/mat2-web.git
+    dest: "{{ mat2_web_docroot }}"
+    update: "{{ mat2_web_git_update }}"
+  become_user: "{{ mat2_web_user }}"
+  vars:
+    ansible_ssh_pipelining: True
+  notify:
+    - restart uwsgi
+
+- name: create upload directory
+  file:
+    path: "{{ mat2_web_docroot }}/upload"
+    state: directory
+    owner: "{{ mat2_web_user }}"
+    group: "{{ mat2_web_group }}"
+    mode: 0750
+
+- block:
+
+  - name: create empty file for dm-crypt volume for upload data
+    command: "fallocate -l {{ mat2_web_upload_dmcrypt_volume_size }}M {{ mat2_web_upload_dmcrypt_volume }}"
+    args:
+      creates: "{{ mat2_web_upload_dmcrypt_volume }}"
+    register: __mat2_web_upload_dmcrypt_fallocate
+
+  - name: fill dm-crypt volume for upload data with random data
+    command: "dd if=/dev/urandom of={{ mat2_web_upload_dmcrypt_volume }} bs=1M count={{ mat2_web_upload_dmcrypt_volume_size }}"
+    when: __mat2_web_upload_dmcrypt_fallocate.changed
+
+  - name: configure dm-crypt volume for upload data with random key in crypttab
+    crypttab:
+      name: "mat2_web_upload_crypt"
+      backing_device: "{{ mat2_web_upload_dmcrypt_volume }}"
+      opts: discard,tmp
+      password: /dev/random
+      state: present
+
+  - name: open dm-crypt volume for upload data
+    command: cryptdisks_start mat2_web_upload_crypt
+    args:
+      creates: /dev/mapper/mat2_web_upload_crypt
+
+  - name: configure mountpoint for dm-crypt volume for upload data
+    mount:
+      path: "{{ mat2_web_docroot }}/uploads"
+      src: /dev/mapper/mat2_web_upload_crypt
+      fstype: ext4
+      state: mounted
+
+  when: mat2_web_upload_dmcrypt
+
+- name: install mat2-web uWSGI config file
+  template:
+    src: mat2-web.ini.j2
+    dest: /etc/uwsgi/apps-available/mat2-web.ini
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart uwsgi
+
+- name: enable mat2-web uWSGI service
+  file:
+    src: /etc/uwsgi/apps-available/mat2-web.ini
+    dest: /etc/uwsgi/apps-enabled/mat2-web.ini
+    state: link
+  notify:
+    - restart uwsgi
+
+- name: install garbage collector cronjob
+  cron:
+    name: "Remove stale mat2-web files that got uploaded but never downloaded"
+    job: 'find {{ mat2_web_docroot }}/uploads/ -type f -mmin +5 -exec rm {} \;'
+    minute: "*/2"
+    user: "{{ mat2_web_user }}"
+    cron_file: mat2-web

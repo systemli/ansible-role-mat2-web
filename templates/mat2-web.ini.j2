@@ -1,0 +1,26 @@
+[uwsgi]
+module=main
+chdir = {{ mat2_web_docroot }}
+callable = app
+wsgi-file = main.py
+master = true
+workers = 1
+plugins = python3
+
+uid = {{ mat2_web_user }}
+gid = {{ mat2_web_group }}
+
+# kill stalled processes
+harakiri = 30
+die-on-term = true
+
+{% if mat2_web_uwsgi_unix_socket %}
+socket = mat2-web.sock
+chmod-socket = 774
+{% endif %}
+{% if mat2_web_uwsgi_wsgi_socket %}
+socket = {{ mat2_web_uwsgi_wsgi_ip }}:{{ mat2_web_uwsgi_wsgi_port }}
+{% endif %}
+{% if mat2_web_uwsgi_http_socket %}
+http-socket = {{ mat2_web_uwsgi_http_ip }}:{{ mat2_web_uwsgi_http_port }}
+{% endif %}

@@ -1,0 +1,24 @@
+---
+
+mat2_web_user: "mat2-web"
+mat2_web_group: "{{ mat2_web_user }}"
+mat2_web_home: /var/www/mat2-web
+mat2_web_docroot: "{{ mat2_web_home }}/mat2-web"
+
+mat2_web_git_update: False
+
+mat2_web_upload_dmcrypt: True
+mat2_web_upload_dmcrypt_volume: /var/local/mat2-web-upload-volume.img
+mat2_web_upload_dmcrypt_volume_size: 2048
+
+# Configure, how to expose the uWSGI service
+mat2_web_uwsgi_unix_socket: False
+
+mat2_web_uwsgi_wsgi_socket: True
+mat2_web_uwsgi_wsgi_ip: 0.0.0.0
+mat2_web_uwsgi_wsgi_port: 3031
+
+mat2_web_uwsgi_http_socket: True
+#mat2_web_uwsgi_http_ip: 127.0.0.1
+mat2_web_uwsgi_http_ip: 0.0.0.0
+mat2_web_uwsgi_http_port: 8080
