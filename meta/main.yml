@@ -11,9 +11,9 @@ galaxy_info:
     - metadata
     - anonymization
   platforms:
-  - name: Debian
-    versions:
-      - stretch
+    - name: Debian
+      versions:
+        - stretch
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
