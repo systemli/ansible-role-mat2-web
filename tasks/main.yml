@@ -55,35 +55,35 @@
 
 - block:
 
-  - name: create empty file for dm-crypt volume for upload data
-    command: "fallocate -l {{ mat2_web_upload_dmcrypt_volume_size }}M {{ mat2_web_upload_dmcrypt_volume }}"
-    args:
-      creates: "{{ mat2_web_upload_dmcrypt_volume }}"
-    register: __mat2_web_upload_dmcrypt_fallocate
+    - name: create empty file for dm-crypt volume for upload data
+      command: "fallocate -l {{ mat2_web_upload_dmcrypt_volume_size }}M {{ mat2_web_upload_dmcrypt_volume }}"
+      args:
+        creates: "{{ mat2_web_upload_dmcrypt_volume }}"
+      register: __mat2_web_upload_dmcrypt_fallocate
 
-  - name: fill dm-crypt volume for upload data with random data
-    command: "dd if=/dev/urandom of={{ mat2_web_upload_dmcrypt_volume }} bs=1M count={{ mat2_web_upload_dmcrypt_volume_size }}"
-    when: __mat2_web_upload_dmcrypt_fallocate.changed
+    - name: fill dm-crypt volume for upload data with random data
+      command: "dd if=/dev/urandom of={{ mat2_web_upload_dmcrypt_volume }} bs=1M count={{ mat2_web_upload_dmcrypt_volume_size }}"
+      when: __mat2_web_upload_dmcrypt_fallocate.changed
 
-  - name: configure dm-crypt volume for upload data with random key in crypttab
-    crypttab:
-      name: "mat2_web_upload_crypt"
-      backing_device: "{{ mat2_web_upload_dmcrypt_volume }}"
-      opts: discard,tmp
-      password: /dev/random
-      state: present
+    - name: configure dm-crypt volume for upload data with random key in crypttab
+      crypttab:
+        name: "mat2_web_upload_crypt"
+        backing_device: "{{ mat2_web_upload_dmcrypt_volume }}"
+        opts: discard,tmp
+        password: /dev/random
+        state: present
 
-  - name: open dm-crypt volume for upload data
-    command: cryptdisks_start mat2_web_upload_crypt
-    args:
-      creates: /dev/mapper/mat2_web_upload_crypt
+    - name: open dm-crypt volume for upload data
+      command: cryptdisks_start mat2_web_upload_crypt
+      args:
+        creates: /dev/mapper/mat2_web_upload_crypt
 
-  - name: configure mountpoint for dm-crypt volume for upload data
-    mount:
-      path: "{{ mat2_web_docroot }}/uploads"
-      src: /dev/mapper/mat2_web_upload_crypt
-      fstype: ext4
-      state: mounted
+    - name: configure mountpoint for dm-crypt volume for upload data
+      mount:
+        path: "{{ mat2_web_docroot }}/uploads"
+        src: /dev/mapper/mat2_web_upload_crypt
+        fstype: ext4
+        state: mounted
 
   when: mat2_web_upload_dmcrypt
 
