@@ -17,7 +17,7 @@ mat2_web_uwsgi_unix_socket: False
 
 mat2_web_uwsgi_wsgi_socket: True
 mat2_web_uwsgi_wsgi_ip: 0.0.0.0
-mat2_web_uwsgi_wsgi_port: 3031
+mat2_web_uwsgi_wsgi_port: 3032
 
 mat2_web_uwsgi_http_socket: False
 mat2_web_uwsgi_http_ip: 127.0.0.1
