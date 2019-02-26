@@ -12,6 +12,7 @@
   apt:
     name:
       - bubblewrap
+      - cron
       - cryptsetup
       - git
       - python3-flask
@@ -61,30 +62,32 @@
       register: __mat2_web_upload_dmcrypt_fallocate
 
     - name: fill dm-crypt volume for upload data with random data
-      command: "dd if=/dev/urandom of={{ mat2_web_upload_dmcrypt_volume }} bs=1M count={{ mat2_web_upload_dmcrypt_volume_size }}"
+      command: "dd if=/dev/random of={{ mat2_web_upload_dmcrypt_volume }} bs=1M count={{ mat2_web_upload_dmcrypt_volume_size }}"
       when: __mat2_web_upload_dmcrypt_fallocate.changed
 
     - name: configure dm-crypt volume for upload data with random key in crypttab
       crypttab:
-        name: "mat2_web_upload_crypt"
+        name: "{{ mat2_web_upload_dmcrypt_target }}"
         backing_device: "{{ mat2_web_upload_dmcrypt_volume }}"
-        opts: discard,tmp
-        password: /dev/random
+        opts: cipher=aes-cbc-essiv:sha256,size=256,discard,tmp
+        password: /dev/urandom
         state: present
 
     - name: open dm-crypt volume for upload data
-      command: cryptdisks_start mat2_web_upload_crypt
+      command: cryptdisks_start {{ mat2_web_upload_dmcrypt_target }}
       args:
-        creates: /dev/mapper/mat2_web_upload_crypt
+        creates: "/dev/mapper/{{ mat2_web_upload_dmcrypt_target }}"
 
     - name: configure mountpoint for dm-crypt volume for upload data
       mount:
         path: "{{ mat2_web_docroot }}/uploads"
-        src: /dev/mapper/mat2_web_upload_crypt
+        src: "/dev/mapper/{{ mat2_web_upload_dmcrypt_target }}"
         fstype: ext4
         state: mounted
 
   when: mat2_web_upload_dmcrypt
+  tags:
+    - notest
 
 - name: install mat2-web uWSGI config file
   template:

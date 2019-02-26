@@ -10,6 +10,7 @@ mat2_web_git_update: False
 mat2_web_upload_dmcrypt: True
 mat2_web_upload_dmcrypt_volume: /var/local/mat2-web-upload-volume.img
 mat2_web_upload_dmcrypt_volume_size: 2048
+mat2_web_upload_dmcrypt_target: mat2_web_upload_crypt
 
 # Configure, how to expose the uWSGI service
 mat2_web_uwsgi_unix_socket: False
