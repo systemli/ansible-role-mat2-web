@@ -1,0 +1,10 @@
+---
+- name: ensure monit configs are present
+  copy:
+    src: "monit/conf.d/mat2-web"
+    dest: "/etc/monit/conf.d/mat2-web"
+    owner: root
+    group: root
+    mode: 0600
+  notify:
+    - restart monit

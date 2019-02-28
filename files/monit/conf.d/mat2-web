@@ -1,0 +1,5 @@
+check process mat2-web_service
+    matching "/usr/bin/uwsgi --plugin python3 --ini /var/www/mat2-web/mat2-web.ini"
+    start program = "/usr/sbin/service mat2-web start" with timeout 60 seconds
+    stop program  = "/usr/sbin/service mat2-web stop"
+    group server

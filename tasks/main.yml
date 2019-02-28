@@ -120,3 +120,6 @@
     minute: "*/2"
     user: "{{ mat2_web_user }}"
     cron_file: mat2-web
+
+- include: monit.yml
+  when: mat2_web_monit_enabled

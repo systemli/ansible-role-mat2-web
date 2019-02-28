@@ -22,3 +22,5 @@ mat2_web_uwsgi_wsgi_port: 3032
 mat2_web_uwsgi_http_socket: False
 mat2_web_uwsgi_http_ip: 127.0.0.1
 mat2_web_uwsgi_http_port: 8080
+
+mat2_web_monit_enabled: False

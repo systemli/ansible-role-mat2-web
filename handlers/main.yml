@@ -8,3 +8,8 @@
   service:
     name: mat2-web
     state: restarted
+
+- name: restart monit
+  service:
+    name: monit
+    state: restarted
