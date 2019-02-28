@@ -56,20 +56,15 @@
 - block:
 
     - name: create empty file for dm-crypt volume for upload data
-      command: "fallocate -l {{ mat2_web_upload_dmcrypt_volume_size }}M {{ mat2_web_upload_dmcrypt_volume }}"
+      command: "dd if=/dev/zero of={{ mat2_web_upload_dmcrypt_volume }} bs=1M count={{ mat2_web_upload_dmcrypt_volume_size }}"
       args:
         creates: "{{ mat2_web_upload_dmcrypt_volume }}"
-      register: __mat2_web_upload_dmcrypt_fallocate
-
-    - name: fill dm-crypt volume for upload data with random data
-      command: "dd if=/dev/random of={{ mat2_web_upload_dmcrypt_volume }} bs=1M count={{ mat2_web_upload_dmcrypt_volume_size }}"
-      when: __mat2_web_upload_dmcrypt_fallocate.changed
 
     - name: configure dm-crypt volume for upload data with random key in crypttab
       crypttab:
         name: "{{ mat2_web_upload_dmcrypt_target }}"
         backing_device: "{{ mat2_web_upload_dmcrypt_volume }}"
-        opts: cipher=aes-cbc-essiv:sha256,size=256,discard,tmp
+        opts: cipher=aes-cbc-essiv:sha256,discard,tmp
         password: /dev/urandom
         state: present
 
