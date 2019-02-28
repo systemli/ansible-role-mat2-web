@@ -11,7 +11,7 @@ uid = {{ mat2_web_user }}
 gid = {{ mat2_web_group }}
 
 # kill stalled processes
-harakiri = 30
+harakiri = 90
 die-on-term = true
 
 {% if mat2_web_uwsgi_unix_socket %}
