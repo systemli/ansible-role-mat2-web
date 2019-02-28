@@ -1,18 +1,23 @@
 [uwsgi]
 module=main
+enable-threads = true
 chdir = {{ mat2_web_docroot }}
 callable = app
 wsgi-file = main.py
 master = true
 workers = 1
-plugins = python3
 
 uid = {{ mat2_web_user }}
 gid = {{ mat2_web_group }}
 
+plugins = python3
+
 # kill stalled processes
 harakiri = 90
 die-on-term = true
+
+# disable logging for privacy reasons
+disable-logging = true
 
 {% if mat2_web_uwsgi_unix_socket %}
 socket = mat2-web.sock

@@ -1,6 +1,10 @@
 ---
 
-- name: restart uwsgi
+- name: reload systemd
+  become: "yes"
+  command: systemctl daemon-reload
+
+- name: restart mat2-web
   service:
-    name: uwsgi
+    name: mat2-web
     state: restarted

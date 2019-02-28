@@ -1,0 +1,17 @@
+[Unit]
+Description=Mat2-web uWSGI service
+After=network.target
+Documentation=https://0xacab.org/jvoisin/mat2-web.git
+
+[Service]
+ExecStart=/usr/bin/uwsgi --plugin python3 --ini {{ mat2_web_home }}/mat2-web.ini
+Restart=on-failure
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

@@ -43,7 +43,7 @@
   vars:
     ansible_ssh_pipelining: True
   notify:
-    - restart uwsgi
+    - restart mat2-web
 
 - name: create upload directory
   file:
@@ -96,20 +96,22 @@
 - name: install mat2-web uWSGI config file
   template:
     src: mat2-web.ini.j2
-    dest: /etc/uwsgi/apps-available/mat2-web.ini
+    dest: "{{ mat2_web_home }}/mat2-web.ini"
     owner: root
     group: root
     mode: 0644
   notify:
-    - restart uwsgi
+    - restart mat2-web
 
-- name: enable mat2-web uWSGI service
-  file:
-    src: /etc/uwsgi/apps-available/mat2-web.ini
-    dest: /etc/uwsgi/apps-enabled/mat2-web.ini
-    state: link
+- name: install systemd service unit file for mat2-web uWSGI service
+  template:
+    src: mat2-web.service.j2
+    dest: /etc/systemd/system/mat2-web.service
+    owner: root
+    group: root
+    mode: 0644
   notify:
-    - restart uwsgi
+    - reload systemd
 
 - name: install garbage collector cronjob
   cron:
