@@ -5,6 +5,13 @@ ansible-role-mat2-web
 
 Deploy [mat2-web](https://0xacab.org/jvoisin/mat2-web) as uWSGI service wih Ansible.
 
+Features:
+
+* Run mat2-web as a uWSGI service as dedicated system user
+* Install bubblewrap to enable mat2 sandboxing
+* Create a dm-crypt volume with random key for the uploads folder
+* Install garbage collector cronjob, removes leftover files after five minutes
+
 Contains tests for Travis CI, Molecule and Vagrant.
 
 Requirements
