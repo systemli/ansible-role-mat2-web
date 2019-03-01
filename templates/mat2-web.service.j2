@@ -10,8 +10,8 @@ KillSignal=SIGQUIT
 Type=notify
 StandardError=syslog
 NotifyAccess=all
-User=root
-Group=root
+User={{ mat2_web_user }}
+Group={{ mat2_web_group }}
 
 [Install]
 WantedBy=multi-user.target
