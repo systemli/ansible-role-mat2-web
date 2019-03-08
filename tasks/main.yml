@@ -13,10 +13,12 @@
       - bubblewrap
       - cron
       - cryptsetup
+      - ffmpeg
       - git
       - python3-flask
       - uwsgi
       - uwsgi-plugin-python3
+    install_recommends: False
     state: present
 
 - name: create directory /var/www
