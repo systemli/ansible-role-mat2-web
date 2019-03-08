@@ -13,7 +13,7 @@ gid = {{ mat2_web_group }}
 plugins = python3
 
 # kill stalled processes
-harakiri = 90
+harakiri = {{ mat2_web_uwsgi_harakiri_timeout }}
 die-on-term = true
 
 # disable logging for privacy reasons
