@@ -11,6 +11,7 @@ Features:
 * Install bubblewrap to enable mat2 sandboxing
 * Create a dm-crypt volume with random key for the uploads folder
 * Install garbage collector cronjob, removes leftover files after five minutes
+* Install custom html templates
 
 Contains tests for Travis CI, Molecule and Vagrant.
 

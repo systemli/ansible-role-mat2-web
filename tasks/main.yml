@@ -114,6 +114,27 @@
   notify:
     - reload systemd
 
+- name: create custom template directory
+  file:
+    path: "{{ mat2_web_docroot }}/custom_templates"
+    state: directory
+    owner: "{{ mat2_web_user }}"
+    group: "{{ mat2_web_group }}"
+    mode: 0755
+  when: mat2_web_custom_templates
+
+- name: install custom template files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ mat2_web_home }}/custom_templates/"
+    owner: "{{ mat2_web_user }}"
+    group: "{{ mat2_web_group }}"
+    mode: 0644
+  with_fileglob: "mat2-web/custom_templates/*"
+  when: mat2_web_custom_templates
+  notify:
+    - reload systemd
+
 - name: install garbage collector cronjob
   cron:
     name: "Remove stale mat2-web files that got uploaded but never downloaded"
