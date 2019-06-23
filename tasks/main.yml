@@ -65,7 +65,7 @@
       crypttab:
         name: "{{ mat2_web_upload_dmcrypt_target }}"
         backing_device: "{{ mat2_web_upload_dmcrypt_volume }}"
-        opts: cipher=aes-cbc-essiv:sha256,discard,tmp
+        opts: cipher=aes-cbc-essiv:sha256,hash=plain,discard,tmp
         password: /dev/urandom
         state: present
 
