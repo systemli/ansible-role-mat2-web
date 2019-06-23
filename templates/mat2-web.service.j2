@@ -4,6 +4,8 @@ After=network.target
 Documentation=https://0xacab.org/jvoisin/mat2-web.git
 
 [Service]
+ExecStartPre=+/bin/chown mat2-web:mat2-web {{ mat2_web_docroot }}/uploads
+ExecStartPre=+/bin/chmod 0750 {{ mat2_web_docroot }}/uploads
 ExecStart=/usr/bin/uwsgi --plugin python3 --ini {{ mat2_web_home }}/mat2-web.ini
 Restart=on-failure
 Type=notify
