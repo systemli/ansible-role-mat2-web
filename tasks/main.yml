@@ -113,6 +113,12 @@
     mode: 0644
   notify:
     - reload systemd
+    - restart mat2-web
+
+- name: enable mat2-web uWSGI service
+  service:
+    name: mat2-web
+    enabled: True
 
 - name: create custom template directory
   file:
