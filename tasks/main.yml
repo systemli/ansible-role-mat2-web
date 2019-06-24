@@ -88,7 +88,6 @@
         state: directory
         owner: "{{ mat2_web_user }}"
         group: "{{ mat2_web_group }}"
-        recurse: True
 
   when: mat2_web_upload_dmcrypt
   tags:
