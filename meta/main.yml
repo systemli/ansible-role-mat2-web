@@ -4,7 +4,7 @@ galaxy_info:
   description: Role to setup a mat2-web service
   company: systemli.org
   license: GPLv3
-  min_ansible_version: 2.4
+  min_ansible_version: 2.7
   galaxy_tags:
     - mat2
     - mat2-web
@@ -13,7 +13,7 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - stretch
+        - buster
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
