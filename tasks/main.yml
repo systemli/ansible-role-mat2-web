@@ -15,7 +15,10 @@
       - cryptsetup
       - ffmpeg
       - git
+      - python3-cerberus
       - python3-flask
+      - python3-flask-cors
+      - python3-flask-restful
       - uwsgi
       - uwsgi-plugin-python3
     install_recommends: False
