@@ -12,6 +12,9 @@ mat2_web_upload_dmcrypt_volume: /var/local/mat2-web-upload-volume.img
 mat2_web_upload_dmcrypt_volume_size: 2048
 mat2_web_upload_dmcrypt_target: mat2_web_upload_crypt
 
+# Maximum upload file size (in MB)
+mat2_web_max_content_length: 32
+
 # Search and install custom templates?
 mat2_web_custom_templates: False
 

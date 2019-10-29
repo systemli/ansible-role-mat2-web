@@ -134,7 +134,7 @@
 - name: install custom template files
   copy:
     src: "{{ item }}"
-    dest: "{{ mat2_web_docroot }}//custom_templates/"
+    dest: "{{ mat2_web_docroot }}/custom_templates/"
     owner: "{{ mat2_web_user }}"
     group: "{{ mat2_web_group }}"
     mode: 0644
@@ -142,6 +142,16 @@
   when: mat2_web_custom_templates
   notify:
     - reload systemd
+
+- name: install custom config file
+  template:
+    src: config.py.j2
+    dest: "{{ mat2_web_docroot }}/config.py"
+    owner: "{{ mat2_web_user }}"
+    group: "{{ mat2_web_group }}"
+    mode: 0644
+  notify:
+    - restart mat2-web
 
 - name: install garbage collector cronjob
   cron:
