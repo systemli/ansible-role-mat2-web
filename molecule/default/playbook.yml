@@ -4,3 +4,5 @@
   become: true
   roles:
     - role: ansible-role-mat2-web
+  vars:
+    __testing: true

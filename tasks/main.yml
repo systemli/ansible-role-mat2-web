@@ -92,9 +92,9 @@
         owner: "{{ mat2_web_user }}"
         group: "{{ mat2_web_group }}"
 
-  when: mat2_web_upload_dmcrypt
-  tags:
-    - notest
+  when:
+    - mat2_web_upload_dmcrypt
+    - not __testing|default()
 
 - name: install mat2-web uWSGI config file
   template:
