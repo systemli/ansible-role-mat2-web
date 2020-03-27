@@ -3,7 +3,6 @@
 - name: install mat2
   apt:
     name: mat2
-    default_release: "{{ 'stretch-backports' if ansible_distribution_release == 'stretch' else omit }}"
     install_recommends: False
     state: present
 

@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: mat2-web
   author: systemli
   description: Role to setup a mat2-web service
   company: systemli.org
@@ -17,5 +18,4 @@ galaxy_info:
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
-dependencies:
-  - role: jnv.debian-backports
+dependencies: []
