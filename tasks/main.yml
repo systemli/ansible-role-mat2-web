@@ -42,6 +42,7 @@
     repo: https://0xacab.org/jvoisin/mat2-web.git
     dest: "{{ mat2_web_docroot }}"
     update: "{{ mat2_web_git_update }}"
+  become: True
   become_user: "{{ mat2_web_user }}"
   vars:
     ansible_ssh_pipelining: True

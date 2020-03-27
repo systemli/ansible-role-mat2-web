@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: mat2-web
+  role_name: mat2_web
   author: systemli
   description: Role to setup a mat2-web service
   company: systemli.org
@@ -8,7 +8,7 @@ galaxy_info:
   min_ansible_version: 2.7
   galaxy_tags:
     - mat2
-    - mat2-web
+    - web
     - metadata
     - anonymization
   platforms:

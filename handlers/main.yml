@@ -1,8 +1,9 @@
 ---
 
 - name: reload systemd
-  become: "yes"
-  command: systemctl daemon-reload
+  become: True
+  systemd:
+    daemon-reload: True
 
 - name: restart mat2-web
   service:
