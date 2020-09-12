@@ -1,4 +1,10 @@
 ---
+dependency:
+  name: galaxy
+  options:
+    role-file: molecule/default/requirements.yml
+    force: false
+
 driver:
   name: docker
 
@@ -10,9 +16,12 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
+
 lint: yamllint .
+
 provisioner:
   name: ansible
   playbooks:
+    prepare: ../default/prepare.yml
     converge: ../default/converge.yml
     verify: ../default/verify.yml
