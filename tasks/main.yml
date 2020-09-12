@@ -14,10 +14,13 @@
       - cryptsetup
       - ffmpeg
       - git
+      - python3-blinker
       - python3-cerberus
+      - python3-flasgger
       - python3-flask
       - python3-flask-cors
       - python3-flask-restful
+      - python3-mutagen
       - uwsgi
       - uwsgi-plugin-python3
     install_recommends: False
@@ -87,7 +90,7 @@
 
     - name: set owner for filesystem on dm-crypt volume
       file:
-        path: "{{ item }}"
+        path: "{{ mat2_web_docroot }}/uploads"
         state: directory
         recurse: True
         owner: "{{ mat2_web_user }}"
