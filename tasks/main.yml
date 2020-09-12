@@ -87,8 +87,9 @@
 
     - name: set owner for filesystem on dm-crypt volume
       file:
-        path: "{{ mat2_web_docroot }}/uploads"
+        path: "{{ item }}"
         state: directory
+        recurse: True
         owner: "{{ mat2_web_user }}"
         group: "{{ mat2_web_group }}"
 
