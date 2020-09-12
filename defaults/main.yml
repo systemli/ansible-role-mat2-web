@@ -19,7 +19,7 @@ mat2_web_max_content_length: 32
 mat2_web_custom_templates: False
 
 # Timeout, before uWSGI session process is killed
-mat2_web_uwsgi_harakiri_timeout: 300
+mat2_web_uwsgi_harakiri_timeout: 30
 
 # Configure, how to expose the uWSGI service
 mat2_web_uwsgi_unix_socket: False
