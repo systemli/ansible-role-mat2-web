@@ -1,7 +1,7 @@
 ansible-role-mat2-web
 =====================
 
-[![Build Status](https://travis-ci.org/systemli/ansible-role-mat2-web.svg?branch=master)](https://travis-ci.org/systemli/ansible-role-mat2-web)
+[![Build Status](https://github.com/systemli/ansible-role-mat2-web/workflows/Molecule/badge.svg?branch=master)](https://github.com/systemli/ansible-role-mat2-web/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-mat2__web-blue.svg)](https://galaxy.ansible.com/systemli/mat2_web/)
 
 Deploy [mat2-web](https://0xacab.org/jvoisin/mat2-web) as uWSGI service wih Ansible.
@@ -22,15 +22,23 @@ Requirements
 Debian 10. Other versions of Debian/Ubuntu might be supported as well, but aren't tested.
 
 
+
+Testing & Development
+---------------------
+
 Tests
 -----
 
-For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
+For developing and testing the role we use Github Actions, Molecule, and Vagrant. On the local environment you can easily test the role with
+
+Run local tests with:
 
 ```
-pip install molecule-vagrant ansible-lint yamllint
 molecule test
 ```
+
+Requires Molecule, Vagrant and `python-vagrant, molecule-goss, molecule-vagrant` to be installed.For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
+
 
 This requires [Vagrant](https://www.vagrantup.com/downloads.html) to be installed.
 
