@@ -1,7 +1,7 @@
 ansible-role-mat2-web
 =====================
 
-[![Build Status](https://github.com/systemli/ansible-role-mat2-web/workflows/Molecule/badge.svg?branch=master)](https://github.com/systemli/ansible-role-mat2-web/actions?query=workflow%3AIntegration)
+[![Build Status](https://github.com/systemli/ansible-role-mat2-web/workflows/Integration/badge.svg?branch=master)](https://github.com/systemli/ansible-role-mat2-web/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-mat2__web-blue.svg)](https://galaxy.ansible.com/systemli/mat2_web/)
 
 Deploy [mat2-web](https://0xacab.org/jvoisin/mat2-web) as uWSGI service wih Ansible.
