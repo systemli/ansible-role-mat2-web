@@ -21,10 +21,17 @@
       - python3-flask-cors
       - python3-flask-restful
       - python3-mutagen
+      - python3-pip
       - uwsgi
       - uwsgi-plugin-python3
     install_recommends: False
     state: present
+
+- name: Install pyyaml pip package
+  pip:
+    name: pyyaml
+    version: 5.4.1
+    executable: pip3
 
 - name: create directory /var/www
   file:
