@@ -6,3 +6,6 @@
     - role: ansible-role-mat2-web
   vars:
     __testing: true
+    ansible_python_interpreter: /usr/bin/python3
+    mat2_web_uwsgi_wsgi_socket: False
+    mat2_web_uwsgi_http_socket: True

@@ -1,0 +1,21 @@
+---
+
+package:
+  mat2:
+    installed: true
+
+port:
+  tcp:8080:
+    listening: true
+
+service:
+  mat2-web:
+    enabled: true
+    running: true
+
+http:
+  http://localhost:8080:
+    status: 200
+    body:
+      - iceberg
+      - jvoisin
