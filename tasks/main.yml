@@ -152,7 +152,7 @@
   with_fileglob: "mat2-web/custom_templates/*"
   when: mat2_web_custom_templates
   notify:
-    - reload systemd
+    - restart mat2-web
 
 - name: install custom config file
   template:
