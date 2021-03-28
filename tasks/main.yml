@@ -18,6 +18,7 @@
       - python3-cerberus
       - python3-flasgger
       - python3-flask
+      - python3-flask-assets
       - python3-flask-cors
       - python3-flask-restful
       - python3-mutagen
@@ -54,10 +55,36 @@
     update: "{{ mat2_web_git_update }}"
   become: True
   become_user: "{{ mat2_web_user }}"
+  register: git_repository_checkout
   vars:
     ansible_ssh_pipelining: True
   notify:
     - restart mat2-web
+
+- name: build css files
+  block:
+    - name: Install npm dependencies
+      command: npm i
+      register: npm_dep_install
+      failed_when: '"ERR!" in npm_dep_install.stderr'
+      args:
+        chdir: "{{ mat2_web_docroot }}"
+
+    - name: Install global npm package postcss and postcss-cli
+      npm:
+        name: "{{ item }}"
+        global: yes
+        production: yes
+        state: present
+      with_items:
+        - postcss
+        - postcss-cli
+
+    - name: Run npm build:css operation
+      shell: "npm run build:css"
+      args:
+        chdir: "{{ mat2_web_docroot }}"
+  when: git_repository_checkout.changed
 
 - name: create upload directory
   file:
@@ -171,6 +198,9 @@
     minute: "*/2"
     user: "{{ mat2_web_user }}"
     cron_file: mat2-web
+  changed_when: False
+  # see ansible bug in 2.9.12
+  # https://github.com/ansible/ansible/issues/71217
 
 - include: monit.yml
   when: mat2_web_monit_enabled
