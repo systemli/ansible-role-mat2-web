@@ -84,6 +84,8 @@
       shell: "npm run build:css"
       args:
         chdir: "{{ mat2_web_docroot }}"
+      become: True
+      become_user: "{{ mat2_web_user }}"
   when: git_repository_checkout.changed
 
 - name: create upload directory
