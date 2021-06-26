@@ -37,10 +37,15 @@ Run local tests with:
 molecule test
 ```
 
-Requires Molecule, Vagrant and `python-vagrant, molecule-goss, molecule-vagrant` to be installed.For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
+Requires Molecule, [Vagrant](https://www.vagrantup.com/downloads.html)  and `python-vagrant, molecule-goss, molecule-vagrant` to be installed.For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
 
+This will spin up a virtual machine with Debian Buster. Afterwards you can connect to the mat2
+web interface via:
 
-This requires [Vagrant](https://www.vagrantup.com/downloads.html) to be installed.
+```
+http://localhost:8080
+```
+
 
 License
 -------
